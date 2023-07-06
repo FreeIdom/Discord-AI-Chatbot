@@ -20,6 +20,6 @@ jobs:
       
       - name: 'Build and push image'
         run: |
-          tag_name=ghcr.io/discordbot:${{ github.sha }}
+          tag_name=ghcr.io/${{ github.actor }}/discordbot:${{ github.sha }}
           docker build . --tag $tag_name
           docker push $tag_name
