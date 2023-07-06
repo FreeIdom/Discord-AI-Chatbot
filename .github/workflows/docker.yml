@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  push-store-image:
+  push-image:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout GitHub Action'
@@ -20,6 +20,6 @@ jobs:
       
       - name: 'Build and push image'
         run: |
-          tag_name=ghcr.io/${{ github.actor }}/discordbot:${{ github.sha }}
+          tag_name=ghcr.io/${{ github.actor.lower() }}/discordbot:${{ github.sha }}
           docker build . --tag $tag_name
           docker push $tag_name
