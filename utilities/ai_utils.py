@@ -1,5 +1,6 @@
 import aiohttp
 import io
+import os
 from datetime import datetime
 import re
 import asyncio
@@ -12,8 +13,9 @@ from utilities.config_loader import load_current_language, config
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
 
-base_urls = ['https://chat-aim.vercel.app']
-
+// base_urls = ['https://chat-aim.vercel.app']
+base_urls = [os.getenv('BASE_AI_URL'), 'https://chat-aim.vercel.app']
+base_ai_key = os.getenv('BASE_AI_KEY', "")
 
 async def search(prompt):
     """
@@ -77,6 +79,8 @@ async def generate_response(instructions, search, history, filecontent):
     headers = {
         'Content-Type': 'application/json',
     }
+    if base_ai_key:
+        headers["Authorization"] = f"Bearer {base_ai_key}"
     data = {
         'model': 'gpt-3.5-turbo-16k-0613',
         'temperature': 0.7,
