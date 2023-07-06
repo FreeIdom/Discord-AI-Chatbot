@@ -13,7 +13,7 @@ from utilities.config_loader import load_current_language, config
 current_language = load_current_language()
 internet_access = config['INTERNET_ACCESS']
 
-// base_urls = ['https://chat-aim.vercel.app']
+# base_urls = ['https://chat-aim.vercel.app']
 base_urls = [os.getenv('BASE_AI_URL'), 'https://chat-aim.vercel.app']
 base_ai_key = os.getenv('BASE_AI_KEY', "")
 
