@@ -1,0 +1,25 @@
+name: Deploy image
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  push-store-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@main
+
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+      
+      - name: 'Build and push image'
+        run: |
+          tag_name=ghcr.io/discordbot:${{ github.sha }}
+          docker build . --tag $tag_name
+          docker push $tag_name
